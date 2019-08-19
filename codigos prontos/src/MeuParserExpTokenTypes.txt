@@ -1,0 +1,11 @@
+// $ANTLR 2.7.6 (2005-12-22): gramatica.g -> MeuParserExpTokenTypes.txt$
+MeuParserExp    // output token vocab name
+T_eof=4
+T_plus=5
+T_minus=6
+T_times=7
+T_divi=8
+T_num=9
+T_ap=10
+T_fp=11
+T_blank=12
