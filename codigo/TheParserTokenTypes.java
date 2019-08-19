@@ -1,6 +1,6 @@
-// $ANTLR 2.7.6 (2005-12-22): "gramatica.g" -> "MeuParser.java"$
+// $ANTLR 2.7.6 (2005-12-22): "gramatica.g" -> "TheParser.java"$
 
-public interface MeuParserTokenTypes {
+public interface TheParserTokenTypes {
 	int EOF = 1;
 	int NULL_TREE_LOOKAHEAD = 3;
 	int LITERAL_programa = 4;
@@ -20,6 +20,7 @@ public interface MeuParserTokenTypes {
 	int T_mult = 18;
 	int T_divi = 19;
 	int T_num = 20;
-	int T_comm = 21;
-	int T_blank = 22;
+	int T_comm_i = 21;
+	int T_comm_f = 22;
+	int T_blank = 23;
 }

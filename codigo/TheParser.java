@@ -1,4 +1,4 @@
-// $ANTLR 2.7.6 (2005-12-22): "gramatica.g" -> "MeuParser.java"$
+// $ANTLR 2.7.6 (2005-12-22): "gramatica.g" -> "TheParser.java"$
 
 import antlr.TokenBuffer;
 import antlr.TokenStreamException;
@@ -14,10 +14,10 @@ import antlr.SemanticException;
 import antlr.ParserSharedInputState;
 import antlr.collections.impl.BitSet;
 
-public class MeuParser extends antlr.LLkParser       implements MeuParserTokenTypes
+public class TheParser extends antlr.LLkParser       implements TheParserTokenTypes
  {
 
-	java.util.HashMap<String, String> mapaVar;
+	java.util.HashMap<String, String> mapaVar = new java.util.HashMap<String, String>();
 	Programa p;
 
     public void setPrograma(String name){
@@ -27,25 +27,25 @@ public class MeuParser extends antlr.LLkParser       implements MeuParserTokenTy
     	return p;
     }
 
-protected MeuParser(TokenBuffer tokenBuf, int k) {
+protected TheParser(TokenBuffer tokenBuf, int k) {
   super(tokenBuf,k);
   tokenNames = _tokenNames;
 }
 
-public MeuParser(TokenBuffer tokenBuf) {
+public TheParser(TokenBuffer tokenBuf) {
   this(tokenBuf,1);
 }
 
-protected MeuParser(TokenStream lexer, int k) {
+protected TheParser(TokenStream lexer, int k) {
   super(lexer,k);
   tokenNames = _tokenNames;
 }
 
-public MeuParser(TokenStream lexer) {
+public TheParser(TokenStream lexer) {
   this(lexer,1);
 }
 
-public MeuParser(ParserSharedInputState state) {
+public TheParser(ParserSharedInputState state) {
   super(state,1);
   tokenNames = _tokenNames;
 }
@@ -54,8 +54,6 @@ public MeuParser(ParserSharedInputState state) {
 		
 		
 		try {      // for error handling
-			mapaVar = new java.util.HashMap<String, String>(); 
-			
 			match(LITERAL_programa);
 			declara();
 			bloco();
@@ -385,7 +383,8 @@ public MeuParser(ParserSharedInputState state) {
 		"T_mult",
 		"T_divi",
 		"T_num",
-		"T_comm",
+		"T_comm_i",
+		"T_comm_f",
 		"T_blank"
 	};
 	

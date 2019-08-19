@@ -1,5 +1,5 @@
-// $ANTLR 2.7.6 (2005-12-22): gramatica.g -> MeuParserTokenTypes.txt$
-MeuParser    // output token vocab name
+// $ANTLR 2.7.6 (2005-12-22): gramatica.g -> TheParserTokenTypes.txt$
+TheParser    // output token vocab name
 LITERAL_programa="programa"=4
 LITERAL_fimprog="fimprog"=5
 LITERAL_declare="declare"=6
@@ -17,5 +17,6 @@ T_subt=17
 T_mult=18
 T_divi=19
 T_num=20
-T_comm=21
-T_blank=22
+T_comm_i=21
+T_comm_f=22
+T_blank=23

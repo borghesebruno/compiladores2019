@@ -1,6 +1,6 @@
-class MeuParser extends Parser;
+class TheParser extends Parser;
 {
-	java.util.HashMap<String, String> mapaVar;
+	java.util.HashMap<String, String> mapaVar = new java.util.HashMap<String, String>();
 	Programa p;
 
     public void setPrograma(String name){
@@ -11,9 +11,7 @@ class MeuParser extends Parser;
     }
 }
 
-prog	: { mapaVar = new java.util.HashMap<String, String>(); 
-          }
-          "programa" declara bloco "fimprog"
+prog	: "programa" declara bloco "fimprog"
 		;
 
 declara : "declare" 
@@ -92,7 +90,7 @@ fator   :  T_Id
 
 
 
-class MeuLexer extends Lexer;
+class TheLexer extends Lexer;
 options{
 	caseSensitive = true;
 	k=2;
@@ -101,7 +99,10 @@ options{
 T_Id	 : ('a'..'z' | 'A'..'Z') ('a'..'z'| 'A'..'Z'| '0'..'9')*
 		 ;
 		 
-T_comm   : "//"
+T_comm_i : "/*"
+		 ;
+
+T_comm_f : "*/"
 		 ;
 
 T_num	 : ('0'..'9')+
@@ -131,7 +132,7 @@ T_ap	 : '('
 T_fp     : ')'
 		 ;
 
-T_texto  : '"' ( 'a'..'z' | '0'..'9' | ' ' | 'A'..'Z' )+ '"'
+T_texto  : '"' ( 'a'..'z' | '0'..'9' | ' ' | 'A'..'Z' | '!' | '?' | '.' | ',' | ':' | ';' | '/' )* '"'
 		 ;
 
 T_attr	 : ":="
@@ -139,7 +140,3 @@ T_attr	 : ":="
 
 T_blank  : ( ' ' | '\n' {newline();}| '\r' | '\t') {_ttype=Token.SKIP;}
 	     ;
-
-
-
-

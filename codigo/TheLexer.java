@@ -1,4 +1,4 @@
-// $ANTLR 2.7.6 (2005-12-22): "gramatica.g" -> "MeuLexer.java"$
+// $ANTLR 2.7.6 (2005-12-22): "gramatica.g" -> "TheLexer.java"$
 
 import java.io.InputStream;
 import antlr.TokenStreamException;
@@ -24,18 +24,18 @@ import antlr.LexerSharedInputState;
 import antlr.collections.impl.BitSet;
 import antlr.SemanticException;
 
-public class MeuLexer extends antlr.CharScanner implements MeuParserTokenTypes, TokenStream
+public class TheLexer extends antlr.CharScanner implements TheParserTokenTypes, TokenStream
  {
-public MeuLexer(InputStream in) {
+public TheLexer(InputStream in) {
 	this(new ByteBuffer(in));
 }
-public MeuLexer(Reader in) {
+public TheLexer(Reader in) {
 	this(new CharBuffer(in));
 }
-public MeuLexer(InputBuffer ib) {
+public TheLexer(InputBuffer ib) {
 	this(new LexerSharedInputState(ib));
 }
-public MeuLexer(LexerSharedInputState state) {
+public TheLexer(LexerSharedInputState state) {
 	super(state);
 	caseSensitiveLiterals = true;
 	setCaseSensitive(true);
@@ -95,12 +95,6 @@ tryAgain:
 					theRetToken=_returnToken;
 					break;
 				}
-				case '*':
-				{
-					mT_mult(true);
-					theRetToken=_returnToken;
-					break;
-				}
 				case ',':
 				{
 					mT_virg(true);
@@ -144,8 +138,16 @@ tryAgain:
 					break;
 				}
 				default:
-					if ((LA(1)=='/') && (LA(2)=='/')) {
-						mT_comm(true);
+					if ((LA(1)=='/') && (LA(2)=='*')) {
+						mT_comm_i(true);
+						theRetToken=_returnToken;
+					}
+					else if ((LA(1)=='*') && (LA(2)=='/')) {
+						mT_comm_f(true);
+						theRetToken=_returnToken;
+					}
+					else if ((LA(1)=='*') && (true)) {
+						mT_mult(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='/') && (true)) {
@@ -260,12 +262,25 @@ tryAgain:
 		_returnToken = _token;
 	}
 	
-	public final void mT_comm(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
+	public final void mT_comm_i(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
 		int _ttype; Token _token=null; int _begin=text.length();
-		_ttype = T_comm;
+		_ttype = T_comm_i;
 		int _saveIndex;
 		
-		match("//");
+		match("/*");
+		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
+			_token = makeToken(_ttype);
+			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
+		}
+		_returnToken = _token;
+	}
+	
+	public final void mT_comm_f(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {
+		int _ttype; Token _token=null; int _begin=text.length();
+		_ttype = T_comm_f;
+		int _saveIndex;
+		
+		match("*/");
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -279,17 +294,17 @@ tryAgain:
 		int _saveIndex;
 		
 		{
-		int _cnt29=0;
-		_loop29:
+		int _cnt30=0;
+		_loop30:
 		do {
 			if (((LA(1) >= '0' && LA(1) <= '9'))) {
 				matchRange('0','9');
 			}
 			else {
-				if ( _cnt29>=1 ) { break _loop29; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt30>=1 ) { break _loop30; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
 			}
 			
-			_cnt29++;
+			_cnt30++;
 		} while (true);
 		}
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
@@ -410,8 +425,7 @@ tryAgain:
 		
 		match('"');
 		{
-		int _cnt40=0;
-		_loop40:
+		_loop41:
 		do {
 			switch ( LA(1)) {
 			case 'a':  case 'b':  case 'c':  case 'd':
@@ -448,12 +462,46 @@ tryAgain:
 				matchRange('A','Z');
 				break;
 			}
+			case '!':
+			{
+				match('!');
+				break;
+			}
+			case '?':
+			{
+				match('?');
+				break;
+			}
+			case '.':
+			{
+				match('.');
+				break;
+			}
+			case ',':
+			{
+				match(',');
+				break;
+			}
+			case ':':
+			{
+				match(':');
+				break;
+			}
+			case ';':
+			{
+				match(';');
+				break;
+			}
+			case '/':
+			{
+				match('/');
+				break;
+			}
 			default:
 			{
-				if ( _cnt40>=1 ) { break _loop40; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				break _loop41;
 			}
 			}
-			_cnt40++;
 		} while (true);
 		}
 		match('"');
