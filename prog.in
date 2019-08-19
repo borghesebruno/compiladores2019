@@ -1,0 +1,14 @@
+programa
+declare a,b,c.
+	escreva("Meu primeiro programa").
+	escreva("Digite o valor de A").
+	leia( a ).
+	escreva("Digite o valor de B").
+	leia( b ).
+	escreva("Digite o valor de C").
+    leia( c ).	
+	escreva("Os valores que foram digitados").
+	escreva(a).
+	escreva(b).
+	escreva( c ).
+fimprog
