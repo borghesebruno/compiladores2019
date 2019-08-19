@@ -43,8 +43,8 @@ public MeuLexer(LexerSharedInputState state) {
 	literals.put(new ANTLRHashString("programa", this), new Integer(4));
 	literals.put(new ANTLRHashString("escreva", this), new Integer(13));
 	literals.put(new ANTLRHashString("leia", this), new Integer(10));
-	literals.put(new ANTLRHashString("declare", this), new Integer(5));
-	literals.put(new ANTLRHashString("fimprog", this), new Integer(9));
+	literals.put(new ANTLRHashString("declare", this), new Integer(6));
+	literals.put(new ANTLRHashString("fimprog", this), new Integer(5));
 }
 
 public Token nextToken() throws TokenStreamException {

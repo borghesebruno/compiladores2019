@@ -1,5 +1,5 @@
 programa
-declare a,b,c.
+	declare a,b,c.
 	escreva("Meu primeiro programa").
 	escreva("Digite o valor de A").
 	leia( a ).

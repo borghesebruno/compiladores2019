@@ -1,11 +1,11 @@
 // $ANTLR 2.7.6 (2005-12-22): gramatica.g -> MeuParserTokenTypes.txt$
 MeuParser    // output token vocab name
 LITERAL_programa="programa"=4
-LITERAL_declare="declare"=5
-T_Id=6
-T_virg=7
-T_pontof=8
-LITERAL_fimprog="fimprog"=9
+LITERAL_fimprog="fimprog"=5
+LITERAL_declare="declare"=6
+T_Id=7
+T_virg=8
+T_pontof=9
 LITERAL_leia="leia"=10
 T_ap=11
 T_fp=12

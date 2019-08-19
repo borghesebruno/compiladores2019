@@ -13,7 +13,7 @@ class MeuParser extends Parser;
 
 prog	: { mapaVar = new java.util.HashMap<String, String>(); 
           }
-          "programa" declara bloco
+          "programa" declara bloco "fimprog"
 		;
 
 declara : "declare" 
@@ -30,7 +30,7 @@ declara : "declare"
 		   }
 		;
 
-bloco   : (cmd)+ "fimprog"
+bloco   : (cmd)+
 		;
 
 cmd		:  cmdLeia    T_pontof  
