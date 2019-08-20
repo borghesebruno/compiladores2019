@@ -1,8 +1,8 @@
-public class CmdLeitura extends Command {
+public class CmdSeEs extends Command {
 	private String idVar;
 	private String type;
 
-	public CmdLeitura(String idVar, String type) {
+	public CmdSeEs(String idVar, String type) {
 		this.idVar = idVar;
 		this.type = type;
 	}
@@ -12,9 +12,6 @@ public class CmdLeitura extends Command {
 		switch(type) {
 			case "Integer":
 				input = ".nextInt();";
-				break;
-			case "Float":
-				input = ".nextFloat();";
 				break;
 			case "Boolean":
 				input = ".nextBoolean();";

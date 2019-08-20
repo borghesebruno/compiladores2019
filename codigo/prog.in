@@ -1,6 +1,8 @@
 programa
-	declare inteiro a,b,c.
-	declare booleano d,e.
+	declare inteiro a,b.
+	declare decimal c,d.
+	declare booleano e,f.
+
 	escreva("Meu primeiro programa").
 	escreva("Digite o valor de A").
 	leia(a).
@@ -12,6 +14,13 @@ programa
 	leia(d).
 	escreva("Digite o valor de E").
 	leia(e).
+	escreva("Digite o valor de F").
+	leia(f).
+
+	se(1<=2) entao
+		escreva("dentro do se").
+	es
+
 	escreva("").
 	escreva("Os valores que foram digitados:").
 	escreva(a).
@@ -19,5 +28,7 @@ programa
 	escreva(c).
 	escreva(d).
 	escreva(e).
+	escreva(f).
+
 	escreva("Tudo otimo!").
 fimprog

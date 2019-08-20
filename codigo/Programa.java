@@ -38,6 +38,8 @@ public class Programa {
 				f.write("		" + var.getValue() + " " + var.getKey() + ";\n");
 			}
 
+			f.write("\n");
+
 			for (Command c : comandos) {
 				f.write("		"+ c.toJava() + "\n");
 			}

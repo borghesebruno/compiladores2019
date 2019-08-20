@@ -4,9 +4,11 @@ public class Teste{
 
 		Integer a;
 		Integer b;
-		Integer c;
-		Boolean d;
+		Float c;
+		Float d;
 		Boolean e;
+		Boolean f;
+
 		System.out.println("Meu primeiro programa");
 
 		System.out.println("Digite o valor de A");
@@ -19,15 +21,21 @@ public class Teste{
 
 		System.out.println("Digite o valor de C");
 
-		c = INPUT.nextInt();
+		c = INPUT.nextFloat();
 
 		System.out.println("Digite o valor de D");
 
-		d = INPUT.nextBoolean();
+		d = INPUT.nextFloat();
 
 		System.out.println("Digite o valor de E");
 
 		e = INPUT.nextBoolean();
+
+		System.out.println("Digite o valor de F");
+
+		f = INPUT.nextBoolean();
+
+		System.out.println("dentro do se");
 
 		System.out.println("");
 
@@ -42,6 +50,8 @@ public class Teste{
 		System.out.println(d);
 
 		System.out.println(e);
+
+		System.out.println(f);
 
 		System.out.println("Tudo otimo!");
 
