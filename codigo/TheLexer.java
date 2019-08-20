@@ -41,10 +41,12 @@ public TheLexer(LexerSharedInputState state) {
 	setCaseSensitive(true);
 	literals = new Hashtable();
 	literals.put(new ANTLRHashString("programa", this), new Integer(4));
-	literals.put(new ANTLRHashString("escreva", this), new Integer(13));
-	literals.put(new ANTLRHashString("leia", this), new Integer(10));
+	literals.put(new ANTLRHashString("escreva", this), new Integer(15));
+	literals.put(new ANTLRHashString("leia", this), new Integer(12));
+	literals.put(new ANTLRHashString("inteiro", this), new Integer(7));
 	literals.put(new ANTLRHashString("declare", this), new Integer(6));
 	literals.put(new ANTLRHashString("fimprog", this), new Integer(5));
+	literals.put(new ANTLRHashString("booleano", this), new Integer(8));
 }
 
 public Token nextToken() throws TokenStreamException {
@@ -216,7 +218,7 @@ tryAgain:
 		}
 		}
 		{
-		_loop25:
+		_loop28:
 		do {
 			switch ( LA(1)) {
 			case 'a':  case 'b':  case 'c':  case 'd':
@@ -250,7 +252,7 @@ tryAgain:
 			}
 			default:
 			{
-				break _loop25;
+				break _loop28;
 			}
 			}
 		} while (true);
@@ -294,17 +296,17 @@ tryAgain:
 		int _saveIndex;
 		
 		{
-		int _cnt30=0;
-		_loop30:
+		int _cnt33=0;
+		_loop33:
 		do {
 			if (((LA(1) >= '0' && LA(1) <= '9'))) {
 				matchRange('0','9');
 			}
 			else {
-				if ( _cnt30>=1 ) { break _loop30; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt33>=1 ) { break _loop33; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
 			}
 			
-			_cnt30++;
+			_cnt33++;
 		} while (true);
 		}
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
@@ -425,7 +427,7 @@ tryAgain:
 		
 		match('"');
 		{
-		_loop41:
+		_loop44:
 		do {
 			switch ( LA(1)) {
 			case 'a':  case 'b':  case 'c':  case 'd':
@@ -499,7 +501,7 @@ tryAgain:
 			}
 			default:
 			{
-				break _loop41;
+				break _loop44;
 			}
 			}
 		} while (true);

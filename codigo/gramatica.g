@@ -2,6 +2,7 @@ class TheParser extends Parser;
 {
 	java.util.HashMap<String, String> mapaVar = new java.util.HashMap<String, String>();
 	Programa p;
+	String varType = "";
 
     public void setPrograma(String name){
     	p = new Programa(name);
@@ -11,19 +12,21 @@ class TheParser extends Parser;
     }
 }
 
-prog	: "programa" declara bloco "fimprog"
+prog	: "programa" (declara)* bloco "fimprog"
 		;
 
 declara : "declare" 
-              T_Id {mapaVar.put(LT(0).getText(), LT(0).getText());}
+			  ( "inteiro" {varType = "Integer";}
+			  | "booleano" {varType = "Boolean";} )
+              T_Id {mapaVar.put(LT(0).getText(), varType);}
               ( 
               	T_virg 
-              	T_Id {mapaVar.put(LT(0).getText(), LT(0).getText());}
+              	T_Id {mapaVar.put(LT(0).getText(), varType);}
               )* 
            
            T_pontof 
 		   {
-		      p.setVariaveis(mapaVar.values());
+		      p.setVariaveis(mapaVar);
 			  System.out.println("Variable list assembled...");
 		   }
 		;
@@ -37,14 +40,16 @@ cmd		:  cmdLeia    T_pontof
         ;   
         
 
-cmdLeia :  "leia" T_ap 
-            T_Id       {
-            	         if (mapaVar.get(LT(0).getText()) == null){
-                            throw new RuntimeException("ERROR ID "+LT(0).getText()+" not declared!");
-                         }
-						 
-						 p.addCommand(new CmdLeitura(LT(0).getText()));
-                       } 
+cmdLeia :  "leia" T_ap
+			T_Id {
+				String var = LT(0).getText();
+				
+				if (mapaVar.get(var) == null){
+					throw new RuntimeException("ERROR ID "+LT(0).getText()+" not declared!");
+				}
+
+				p.addCommand(new CmdLeitura(var, mapaVar.get(var)));
+			}
             T_fp
 		;
 

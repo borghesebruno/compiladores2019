@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Collection;
+import java.util.HashMap;
 import java.io.FileWriter;
 import java.io.File;
 
@@ -9,20 +10,17 @@ public class Programa {
 	public static final String INPUT = "INPUT";
 	private String name;
 
-	List<String> variaveis;
+	HashMap<String, String> variaveis;
 	List<Command> comandos;
 
 	public Programa(String name) {
 		this.name = name;
 		comandos = new ArrayList<Command>();
-		variaveis = new ArrayList<String>();
+		variaveis = new HashMap<String, String>();
 	}
 
-	public void setVariaveis(Collection lista) {
-		Iterator it = lista.iterator();
-		while (it.hasNext()) {
-			variaveis.add((String) it.next());
-		}
+	public void setVariaveis(HashMap<String, String> mapa) {
+		variaveis = mapa;
 	}
 
 	public void addCommand(Command c) {
@@ -34,15 +32,18 @@ public class Programa {
 			FileWriter f = new FileWriter(new File(name + ".java"));
 			f.write("public class " + name + "{\n");
 			f.write("	public static void main(String args[]){\n");
-			f.write("		java.util.Scanner " + INPUT + " = new java.util.Scanner(System.in);\n");
-			for (String s : variaveis) {
-				f.write(" int " + s + ";\n");
+			f.write("		java.util.Scanner " + INPUT + " = new java.util.Scanner(System.in);\n\n");
+			
+			for (HashMap.Entry<String, String> var : variaveis.entrySet()) {
+				f.write("		" + var.getValue() + " " + var.getKey() + ";\n");
 			}
+
 			for (Command c : comandos) {
-				f.write(c.toJava() + "\n");
+				f.write("		"+ c.toJava() + "\n");
 			}
-			f.write("	}");
-			f.write("}");
+
+			f.write("	}\n");
+			f.write("}\n");
 			f.close();
 		} catch (Exception ex) {
 			System.out.println("ERRO:" + ex.getMessage());
