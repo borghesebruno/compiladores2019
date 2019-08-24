@@ -15,7 +15,7 @@ programa
 
 	a := 5555;
 	c := 42.0;
-	e := mentira;
+	e := verdade;
 
 	se(e != verdade) entao
 		escreva("dentro do if");

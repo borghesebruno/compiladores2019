@@ -105,7 +105,9 @@ cmdSeEs :  { System.out.println("CmdSeEs");} "se" T_ap
 
 logic   :  { logicExpression = new LogicExpression(); }
 		   expr_l {
-				if (logicExpression.getRoot() == null) logicExpression.setRoot(logicBoolean);
+				if (logicExpression.getRoot() == null) {
+					logicExpression.setRoot(logicBoolean);
+				}
 				logicExpression.eval();
 		   }
 		;
@@ -120,6 +122,7 @@ expr_l  :  bool
 				}
 				bool {
 					if(logicExpression.getRoot() == null) {
+						{ System.out.println("setOp21 " + logicOp);}
 						logicEquals.setRight(logicBoolean);
 						logicExpression.setRoot(logicEquals);
 						logicParentBoolean = logicEquals;

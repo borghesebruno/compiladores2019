@@ -10,6 +10,8 @@ public class UnaryLogicOperand extends AbstractLogicOperand {
     }
 
     public UnaryLogicOperand(String value, Boolean isId) {
+        this.var = value;
+        this.isId = isId;
         switch (value) {
             case "verdade":
                 this.bValue = true;
@@ -20,8 +22,6 @@ public class UnaryLogicOperand extends AbstractLogicOperand {
             default:
                 if(isId) {
                     this.bValue = true;
-                    this.var = value;
-                    this.isId = isId;
                 }
                 break;
         }

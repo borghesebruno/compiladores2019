@@ -17,7 +17,7 @@ public class LogicExpression {
     }
 
     public void eval() {
-        this.value = this.root.getValue();
+        //this.value = this.root.getValue();
         this.stringValue = this.root.getStringValue();
     }
 

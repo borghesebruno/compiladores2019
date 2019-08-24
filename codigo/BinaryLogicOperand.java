@@ -46,8 +46,14 @@ public class BinaryLogicOperand extends AbstractLogicOperand {
     public Boolean getValue() {
         System.out.println("getOp1 " + this.op);
         if (this.op.equals("==")) {
+            System.out.println("getOp21 " + "==");
+            System.out.println(left.getStringValue());
+            System.out.println(right.getStringValue());
             return left.getValue() == right.getValue();
         } else if (this.op.equals("!=")) {
+            System.out.println("getOp21 " + "!=");
+            System.out.println(left.getStringValue());
+            System.out.println(right.getStringValue());
             return left.getValue() != right.getValue();
         } else {
             throw new RuntimeException("Unsupported Operation");
@@ -59,13 +65,9 @@ public class BinaryLogicOperand extends AbstractLogicOperand {
         System.out.println("getOp2 " + this.op);
         if (this.op.equals("==")) {
             System.out.println("getOp21 " + "==");
-            System.out.println(left.getStringValue());
-            System.out.println(right.getStringValue());
             return left.getStringValue() + "==" + right.getStringValue();
         } else if (this.op.equals("!=")) {
             System.out.println("getOp21 " + "!=");
-            System.out.println(left.getStringValue());
-            System.out.println(right.getStringValue());
             return left.getStringValue() + "!=" + right.getStringValue();
         } else {
             throw new RuntimeException("Unsupported Operation");
