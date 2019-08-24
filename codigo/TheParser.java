@@ -24,9 +24,16 @@ public class TheParser extends antlr.LLkParser       implements TheParserTokenTy
 	BinaryOperand multOrDiv;
 	char op;
 
+	LogicExpression logicExpression;
+	AbstractLogicOperand logicBoolean;
+	BinaryLogicOperand logicEquals;
+	AbstractLogicOperand logicParentBoolean;
+	String logicOp;
+
 	java.util.HashMap<String, String> mapaVar = new java.util.HashMap<String, String>();
 	Programa p;
 	
+	String varId = "";
 	String varType = "";
 
     public void setPrograma(String name){
@@ -195,6 +202,7 @@ public TheParser(ParserSharedInputState state) {
 			case LITERAL_se:
 			{
 				cmdSeEs();
+				match(T_pontof);
 				break;
 			}
 			default:
@@ -213,6 +221,7 @@ public TheParser(ParserSharedInputState state) {
 		
 		
 		try {      // for error handling
+			System.out.println("cmdLeia");
 			match(LITERAL_leia);
 			match(T_ap);
 			match(T_Id);
@@ -237,6 +246,7 @@ public TheParser(ParserSharedInputState state) {
 		
 		
 		try {      // for error handling
+			System.out.println("cmdEscr");
 			match(LITERAL_escreva);
 			match(T_ap);
 			{
@@ -275,14 +285,42 @@ public TheParser(ParserSharedInputState state) {
 		
 		
 		try {      // for error handling
+			System.out.println("cmdAttr");
 			match(T_Id);
 			
-						if (mapaVar.get(LT(0).getText()) == null){
-							throw new RuntimeException("ERROR ID "+LT(0).getText()+" not declared!");
-						}
+							varId = LT(0).getText();
+							if (mapaVar.get(varId) == null){
+								throw new RuntimeException("ERROR ID "+LT(0).getText()+" not declared!");
+							}
+							//varType = mapaVar.get(LT(0).getText());
 					
 			match(T_attr);
-			expr();
+			{
+			switch ( LA(1)) {
+			case T_num:
+			{
+				match(T_num);
+				break;
+			}
+			case LITERAL_verdade:
+			{
+				match(LITERAL_verdade);
+				break;
+			}
+			case LITERAL_mentira:
+			{
+				match(LITERAL_mentira);
+				break;
+			}
+			default:
+			{
+				throw new NoViableAltException(LT(1), getFilename());
+			}
+			}
+			}
+			
+						   p.addCommand(new CmdAttr(varId, LT(0).getText()));
+					
 		}
 		catch (RecognitionException ex) {
 			reportError(ex);
@@ -294,29 +332,192 @@ public TheParser(ParserSharedInputState state) {
 		
 		
 		try {      // for error handling
+			System.out.println("CmdSeEs");
 			match(LITERAL_se);
 			match(T_ap);
-			expr();
-			logica();
-			expr();
+			logic();
+			p.addCommand(new CmdSe(logicExpression));
 			match(T_fp);
 			match(LITERAL_entao);
 			bloco();
+			{
+			switch ( LA(1)) {
+			case LITERAL_ss:
+			{
+				match(LITERAL_ss);
+				match(LITERAL_senao);
+				p.addCommand(new CmdSenao());
+				bloco();
+				break;
+			}
+			case LITERAL_es:
+			{
+				break;
+			}
+			default:
+			{
+				throw new NoViableAltException(LT(1), getFilename());
+			}
+			}
+			}
 			match(LITERAL_es);
+			p.addCommand(new CmdFimSe());
 		}
 		catch (RecognitionException ex) {
 			reportError(ex);
-			recover(ex,_tokenSet_4);
+			recover(ex,_tokenSet_5);
 		}
 	}
 	
-	public final void expr() throws RecognitionException, TokenStreamException {
+	public final void logic() throws RecognitionException, TokenStreamException {
+		
+		
+		try {      // for error handling
+			logicExpression = new LogicExpression();
+			expr_l();
+			
+							if (logicExpression.getRoot() == null) logicExpression.setRoot(logicBoolean);
+							logicExpression.eval();
+					
+		}
+		catch (RecognitionException ex) {
+			reportError(ex);
+			recover(ex,_tokenSet_6);
+		}
+	}
+	
+	public final void expr_l() throws RecognitionException, TokenStreamException {
+		
+		
+		try {      // for error handling
+			bool();
+			{
+			_loop23:
+			do {
+				if ((LA(1)==T_igualI||LA(1)==T_difeI)) {
+					{
+					switch ( LA(1)) {
+					case T_igualI:
+					{
+						match(T_igualI);
+						break;
+					}
+					case T_difeI:
+					{
+						match(T_difeI);
+						break;
+					}
+					default:
+					{
+						throw new NoViableAltException(LT(1), getFilename());
+					}
+					}
+					}
+					
+										logicOp = LT(0).getText();
+										{ System.out.println("setOp1 " + logicOp);}
+										logicEquals = new BinaryLogicOperand(logicOp);
+										logicEquals.setLeft(logicBoolean);
+									
+					bool();
+					
+										if(logicExpression.getRoot() == null) {
+											logicEquals.setRight(logicBoolean);
+											logicExpression.setRoot(logicEquals);
+											logicParentBoolean = logicEquals;
+										} else {
+											{ System.out.println("setOp2 " + logicOp);}
+											logicEquals = new BinaryLogicOperand(logicOp);
+											logicEquals.setRight(logicBoolean);
+											BinaryLogicOperand pai = (BinaryLogicOperand)logicParentBoolean;
+											logicEquals.setLeft(pai.getRight());
+											pai.setRight(logicEquals);
+										}
+									
+				}
+				else {
+					break _loop23;
+				}
+				
+			} while (true);
+			}
+		}
+		catch (RecognitionException ex) {
+			reportError(ex);
+			recover(ex,_tokenSet_6);
+		}
+	}
+	
+	public final void bool() throws RecognitionException, TokenStreamException {
+		
+		
+		try {      // for error handling
+			switch ( LA(1)) {
+			case T_Id:
+			{
+				match(T_Id);
+				
+								String var = LT(0).getText();
+											
+								if (mapaVar.get(var) == null){
+									throw new RuntimeException("ERROR ID "+var+" not declared!");
+								}
+								logicBoolean = new UnaryLogicOperand(var, true);
+						
+				break;
+			}
+			case LITERAL_verdade:
+			case LITERAL_mentira:
+			{
+				{
+				switch ( LA(1)) {
+				case LITERAL_verdade:
+				{
+					match(LITERAL_verdade);
+					break;
+				}
+				case LITERAL_mentira:
+				{
+					match(LITERAL_mentira);
+					break;
+				}
+				default:
+				{
+					throw new NoViableAltException(LT(1), getFilename());
+				}
+				}
+				}
+				
+							   logicBoolean = new UnaryLogicOperand(LT(0).getText(), false);
+						
+				break;
+			}
+			case T_ap:
+			{
+				match(T_ap);
+				expr_l();
+				match(T_fp);
+				break;
+			}
+			default:
+			{
+				throw new NoViableAltException(LT(1), getFilename());
+			}
+			}
+		}
+		catch (RecognitionException ex) {
+			reportError(ex);
+			recover(ex,_tokenSet_7);
+		}
+	}
+	
+	public final void expr_a() throws RecognitionException, TokenStreamException {
 		
 		
 		try {      // for error handling
 			termo();
 			{
-			_loop20:
+			_loop29:
 			do {
 				if ((LA(1)==T_soma||LA(1)==T_subt)) {
 					{
@@ -340,7 +541,7 @@ public TheParser(ParserSharedInputState state) {
 					termo();
 				}
 				else {
-					break _loop20;
+					break _loop29;
 				}
 				
 			} while (true);
@@ -352,62 +553,13 @@ public TheParser(ParserSharedInputState state) {
 		}
 	}
 	
-	public final void logica() throws RecognitionException, TokenStreamException {
-		
-		
-		try {      // for error handling
-			{
-			switch ( LA(1)) {
-			case T_menor:
-			{
-				match(T_menor);
-				break;
-			}
-			case T_maior:
-			{
-				match(T_maior);
-				break;
-			}
-			case T_maiorI:
-			{
-				match(T_maiorI);
-				break;
-			}
-			case T_menorI:
-			{
-				match(T_menorI);
-				break;
-			}
-			case T_igualI:
-			{
-				match(T_igualI);
-				break;
-			}
-			case T_difeI:
-			{
-				match(T_difeI);
-				break;
-			}
-			default:
-			{
-				throw new NoViableAltException(LT(1), getFilename());
-			}
-			}
-			}
-		}
-		catch (RecognitionException ex) {
-			reportError(ex);
-			recover(ex,_tokenSet_7);
-		}
-	}
-	
 	public final void termo() throws RecognitionException, TokenStreamException {
 		
 		
 		try {      // for error handling
 			fator();
 			{
-			_loop24:
+			_loop33:
 			do {
 				if ((LA(1)==T_mult||LA(1)==T_divi)) {
 					{
@@ -431,7 +583,7 @@ public TheParser(ParserSharedInputState state) {
 					fator();
 				}
 				else {
-					break _loop24;
+					break _loop33;
 				}
 				
 			} while (true);
@@ -452,21 +604,24 @@ public TheParser(ParserSharedInputState state) {
 			{
 				match(T_Id);
 				
-					  if (mapaVar.get(LT(0).getText()) == null){
-				throw new RuntimeException("ERROR ID "+LT(0).getText()+" not declared!");
-				}
+					  	if (mapaVar.get(LT(0).getText()) == null){
+									throw new RuntimeException("ERROR ID "+LT(0).getText()+" not declared!");
+								}
+				
+								num = new UnaryOperand(Float.parseFloat(LT(0).getText()));
 				
 				break;
 			}
 			case T_num:
 			{
 				match(T_num);
+				num = new UnaryOperand(Float.parseFloat(LT(0).getText()));
 				break;
 			}
 			case T_ap:
 			{
 				match(T_ap);
-				expr();
+				expr_a();
 				match(T_fp);
 				break;
 			}
@@ -503,22 +658,26 @@ public TheParser(ParserSharedInputState state) {
 		"\"escreva\"",
 		"T_texto",
 		"T_attr",
+		"T_num",
+		"\"verdade\"",
+		"\"mentira\"",
 		"\"se\"",
 		"\"entao\"",
+		"\"ss\"",
+		"\"senao\"",
 		"\"es\"",
+		"T_igualI",
+		"T_difeI",
 		"T_soma",
 		"T_subt",
 		"T_mult",
 		"T_divi",
-		"T_num",
-		"T_menor",
-		"T_maior",
-		"T_maiorI",
-		"T_menorI",
-		"T_igualI",
-		"T_difeI",
 		"T_comm_i",
 		"T_comm_f",
+		"T_menor",
+		"T_maior",
+		"T_menorI",
+		"T_maiorI",
 		"T_igual",
 		"T_excla",
 		"T_e",
@@ -532,22 +691,22 @@ public TheParser(ParserSharedInputState state) {
 	}
 	public static final BitSet _tokenSet_0 = new BitSet(mk_tokenSet_0());
 	private static final long[] mk_tokenSet_1() {
-		long[] data = { 599104L, 0L};
+		long[] data = { 4269120L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_1 = new BitSet(mk_tokenSet_1());
 	private static final long[] mk_tokenSet_2() {
-		long[] data = { 599040L, 0L};
+		long[] data = { 4269056L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_2 = new BitSet(mk_tokenSet_2());
 	private static final long[] mk_tokenSet_3() {
-		long[] data = { 2097184L, 0L};
+		long[] data = { 83886112L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_3 = new BitSet(mk_tokenSet_3());
 	private static final long[] mk_tokenSet_4() {
-		long[] data = { 2696224L, 0L};
+		long[] data = { 88155168L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_4 = new BitSet(mk_tokenSet_4());
@@ -557,22 +716,22 @@ public TheParser(ParserSharedInputState state) {
 	}
 	public static final BitSet _tokenSet_5 = new BitSet(mk_tokenSet_5());
 	private static final long[] mk_tokenSet_6() {
-		long[] data = { 8455753728L, 0L};
+		long[] data = { 32768L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_6 = new BitSet(mk_tokenSet_6());
 	private static final long[] mk_tokenSet_7() {
-		long[] data = { 67126272L, 0L};
+		long[] data = { 402685952L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_7 = new BitSet(mk_tokenSet_7());
 	private static final long[] mk_tokenSet_8() {
-		long[] data = { 8468336640L, 0L};
+		long[] data = { 1610645504L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_8 = new BitSet(mk_tokenSet_8());
 	private static final long[] mk_tokenSet_9() {
-		long[] data = { 8518668288L, 0L};
+		long[] data = { 8053096448L, 0L};
 		return data;
 	}
 	public static final BitSet _tokenSet_9 = new BitSet(mk_tokenSet_9());

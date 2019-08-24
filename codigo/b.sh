@@ -13,6 +13,9 @@ java -cp antlr.jar antlr.Tool gramatica.g
 echo
 echo "=============================================================================="
 echo "compilando arquivos java"
+javac -cp antlr.jar:. AbstractOperand.java AbstractLogicOperand.java
+javac -cp antlr.jar:. UnaryOperand.java UnaryLogicOperand.java
+javac -cp antlr.jar:. BinaryOperand.java BinaryLogicOperand.java
 javac -cp antlr.jar:. *.java
 
 echo

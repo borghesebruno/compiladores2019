@@ -41,16 +41,20 @@ public TheLexer(LexerSharedInputState state) {
 	setCaseSensitive(true);
 	literals = new Hashtable();
 	literals.put(new ANTLRHashString("programa", this), new Integer(4));
+	literals.put(new ANTLRHashString("senao", this), new Integer(25));
+	literals.put(new ANTLRHashString("mentira", this), new Integer(21));
 	literals.put(new ANTLRHashString("leia", this), new Integer(13));
 	literals.put(new ANTLRHashString("fimprog", this), new Integer(5));
-	literals.put(new ANTLRHashString("se", this), new Integer(19));
+	literals.put(new ANTLRHashString("se", this), new Integer(22));
 	literals.put(new ANTLRHashString("booleano", this), new Integer(9));
 	literals.put(new ANTLRHashString("escreva", this), new Integer(16));
-	literals.put(new ANTLRHashString("es", this), new Integer(21));
+	literals.put(new ANTLRHashString("verdade", this), new Integer(20));
+	literals.put(new ANTLRHashString("es", this), new Integer(26));
 	literals.put(new ANTLRHashString("declare", this), new Integer(6));
 	literals.put(new ANTLRHashString("inteiro", this), new Integer(7));
+	literals.put(new ANTLRHashString("ss", this), new Integer(24));
 	literals.put(new ANTLRHashString("decimal", this), new Integer(8));
-	literals.put(new ANTLRHashString("entao", this), new Integer(20));
+	literals.put(new ANTLRHashString("entao", this), new Integer(23));
 }
 
 public Token nextToken() throws TokenStreamException {
@@ -107,7 +111,7 @@ tryAgain:
 					theRetToken=_returnToken;
 					break;
 				}
-				case '.':
+				case ';':
 				{
 					mT_pontof(true);
 					theRetToken=_returnToken;
@@ -236,6 +240,7 @@ tryAgain:
 		int _saveIndex;
 		
 		{
+		{
 		switch ( LA(1)) {
 		case 'a':  case 'b':  case 'c':  case 'd':
 		case 'e':  case 'f':  case 'g':  case 'h':
@@ -266,7 +271,7 @@ tryAgain:
 		}
 		}
 		{
-		_loop31:
+		_loop39:
 		do {
 			switch ( LA(1)) {
 			case 'a':  case 'b':  case 'c':  case 'd':
@@ -300,11 +305,13 @@ tryAgain:
 			}
 			default:
 			{
-				break _loop31;
+				break _loop39;
 			}
 			}
 		} while (true);
 		}
+		}
+		_ttype = testLiteralsTable(_ttype);
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -344,17 +351,17 @@ tryAgain:
 		int _saveIndex;
 		
 		{
-		int _cnt36=0;
-		_loop36:
+		int _cnt44=0;
+		_loop44:
 		do {
 			if (((LA(1) >= '0' && LA(1) <= '9'))) {
 				matchRange('0','9');
 			}
 			else {
-				if ( _cnt36>=1 ) { break _loop36; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				if ( _cnt44>=1 ) { break _loop44; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
 			}
 			
-			_cnt36++;
+			_cnt44++;
 		} while (true);
 		}
 		{
@@ -363,17 +370,17 @@ tryAgain:
 			match('.');
 			}
 			{
-			int _cnt40=0;
-			_loop40:
+			int _cnt48=0;
+			_loop48:
 			do {
 				if (((LA(1) >= '0' && LA(1) <= '9'))) {
 					matchRange('0','9');
 				}
 				else {
-					if ( _cnt40>=1 ) { break _loop40; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+					if ( _cnt48>=1 ) { break _loop48; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
 				}
 				
-				_cnt40++;
+				_cnt48++;
 			} while (true);
 			}
 		}
@@ -562,7 +569,7 @@ tryAgain:
 		_ttype = T_pontof;
 		int _saveIndex;
 		
-		match('.');
+		match(';');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -603,7 +610,7 @@ tryAgain:
 		
 		match('"');
 		{
-		_loop59:
+		_loop67:
 		do {
 			switch ( LA(1)) {
 			case 'a':  case 'b':  case 'c':  case 'd':
@@ -665,11 +672,6 @@ tryAgain:
 				match(':');
 				break;
 			}
-			case ';':
-			{
-				match(';');
-				break;
-			}
 			case '/':
 			{
 				match('/');
@@ -677,7 +679,7 @@ tryAgain:
 			}
 			default:
 			{
-				break _loop59;
+				break _loop67;
 			}
 			}
 		} while (true);

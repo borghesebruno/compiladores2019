@@ -1,19 +1,12 @@
-
 public class UnaryOperand extends AbstractOperand{
-    private float fValue;
+    private Float fValue;
     
-    public UnaryOperand(float value){
+    public UnaryOperand(Float value){
         this.fValue = value;
     }
 
     @Override
-    public float getValue() {
+    public Float getValue() {
         return this.fValue;
-    }
-
-    @Override
-    public String toXml() {
-       return "<number> "+this.fValue+ "</number>";
-    }
-    
+    }    
 }

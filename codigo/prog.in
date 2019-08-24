@@ -1,34 +1,35 @@
 programa
-	declare inteiro a,b.
-	declare decimal c,d.
-	declare booleano e,f.
+	declare inteiro a;
+	declare decimal c;
+	declare booleano e;
 
-	escreva("Meu primeiro programa").
-	escreva("Digite o valor de A").
-	leia(a).
-	escreva("Digite o valor de B").
-	leia(b).
-	escreva("Digite o valor de C").
-	leia(c).
-	escreva("Digite o valor de D").
-	leia(d).
-	escreva("Digite o valor de E").
-	leia(e).
-	escreva("Digite o valor de F").
-	leia(f).
+	escreva("Meu primeiro programa");
+	escreva("Digite o valor de A");
+	leia(a);
+	escreva("Digite o valor de C");
+	leia(c);
+	escreva("Digite o valor de E");
+	leia(e);
 
-	se(1<=2) entao
-		escreva("dentro do se").
-	es
+	escreva("");
 
-	escreva("").
-	escreva("Os valores que foram digitados:").
-	escreva(a).
-	escreva(b).
-	escreva(c).
-	escreva(d).
-	escreva(e).
-	escreva(f).
+	a := 5555;
+	c := 42.0;
+	e := mentira;
 
-	escreva("Tudo otimo!").
+	se(e != verdade) entao
+		escreva("dentro do if");
+		escreva("dentro do if");
+	ss senao
+		escreva("senao");
+		escreva("senao");
+	es;
+
+	escreva("");
+	escreva("Os valores que foram digitados:");
+	escreva(a);
+	escreva(c);
+	escreva(e);
+
+	escreva("Tudo otimo!");
 fimprog

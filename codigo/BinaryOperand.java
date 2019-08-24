@@ -16,59 +16,32 @@ public class BinaryOperand  extends AbstractOperand{
         this.op = op;
     }
     
-    public String toXml(){
-        return    "<operation = "+op+">\n"
-                + "  <op_left> "+left.toXml() + "\n"
-                + "  <op_right>"+right.toXml()+ "\n"
-                + "</operation>";
-    }
-    
-    
-
-    /**
-     * @return the op
-     */
     public char getOp() {
         return op;
     }
-
-    /**
-     * @param op the op to set
-     */
+    
     public void setOp(char op) {
         this.op = op;
     }
-
-    /**
-     * @return the left
-     */
+    
     public AbstractOperand getLeft() {
         return left;
     }
-
-    /**
-     * @param left the left to set
-     */
+    
     public void setLeft(AbstractOperand left) {
         this.left = left;
     }
-
-    /**
-     * @return the right
-     */
+    
     public AbstractOperand getRight() {
         return right;
     }
-
-    /**
-     * @param right the right to set
-     */
+    
     public void setRight(AbstractOperand right) {
         this.right = right;
     }
 
     @Override
-    public float getValue() {
+    public Float getValue() {
        if (this.op == '+'){
            return left.getValue() + right.getValue();
        }        
@@ -90,7 +63,4 @@ public class BinaryOperand  extends AbstractOperand{
            throw new RuntimeException("Unsupported Operation");
        }
     }
-    
-    
-    
 }
